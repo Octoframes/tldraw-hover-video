@@ -1,38 +1,39 @@
 import { AssetRecordType, Tldraw } from "@tldraw/tldraw";
 import "@tldraw/tldraw/tldraw.css";
+import { useCallback } from 'react';
 
 export default function App() {
-  const handleMount = (app) => {
+  const handleMount = useCallback((app) => {
     const assetId = AssetRecordType.createId();
-    const placeholderAsset = {
+    const videoAsset = {
       id: assetId,
       typeName: "asset",
-      type: "image",
+      type: "video",
       props: {
-        w: 400,
-        h: 340,
-        name: "card-repo.png",
-        isAnimated: false,
-        mimeType: null,
-        src: "https://raw.githubusercontent.com/scikit-image/scikit-image/main/skimage/data/chelsea.png",
+        w: 640, // Set the width of the video
+        h: 360, // Set the height of the video
+        name: "bunny.mp4",
+        isAnimated: true,
+        mimeType: "video/mp4",
+        src: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
       },
       meta: {},
     };
 
-    app.createAssets([placeholderAsset]);
+    app.createAssets([videoAsset]);
     app.createShapes([
       {
-        type: "image",
-        x:100,
-        y:100,
+        type: "video",
+        x: 100,
+        y: 100,
         props: {
-          w: 400,
-          h: 340,
+          w: 640,
+          h: 360,
           assetId,
         },
       },
     ]);
-  };
+  }, []);
 
   return (
     <div
