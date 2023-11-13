@@ -1,18 +1,48 @@
-import { Tldraw, useEditor } from "@tldraw/tldraw";
+import { AssetRecordType, Tldraw } from "@tldraw/tldraw";
 import "@tldraw/tldraw/tldraw.css";
-import { useState } from "react";
 
 export default function App() {
+  const handleMount = (app) => {
+    const assetId = AssetRecordType.createId();
+    const placeholderAsset = {
+      id: assetId,
+      typeName: "asset",
+      type: "image",
+      props: {
+        w: 400,
+        h: 340,
+        name: "card-repo.png",
+        isAnimated: false,
+        mimeType: null,
+        src: "https://raw.githubusercontent.com/scikit-image/scikit-image/main/skimage/data/chelsea.png",
+      },
+      meta: {},
+    };
+
+    app.createAssets([placeholderAsset]);
+    app.createShapes([
+      {
+        type: "image",
+        x:100,
+        y:100,
+        props: {
+          w: 400,
+          h: 340,
+          assetId,
+        },
+      },
+    ]);
+  };
+
   return (
     <div
       style={{
-        display: "flex",
         position: "relative",
-        width: "100vw",
-        height: "100vh",
+        width: "1000px",
+        height: "1000px",
       }}
     >
-      <Tldraw />
+      <Tldraw onMount={handleMount} />
     </div>
   );
 }
